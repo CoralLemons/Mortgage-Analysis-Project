@@ -5,10 +5,12 @@
     <link href="main.css" rel="stylesheet" />
   </head>
   <body>
-    <h1>Forecasting Loan Application Success by County</h1>
-    <h2>Using HMDA data from 2018-2023</h2>
+    <div id="heading">
+      <h1 id="pageTitle">Forecasting Loan Application Success by County</h1>
+      <h2 id="subHead">Using HMDA data from 2018-2023</h2>
+    </div>
     <main>
-      <aside>
+      <aside id="userInfo">
         <label>
           Select State:
           <select id="state-select">
@@ -25,6 +27,7 @@
             <option>Other</option>
           </select>
         </label>
+        <br>
         <label>
           Select Race/Ethnicity:
           <select id="race-select">
@@ -41,6 +44,7 @@
           this.parentNode.style.backgroundColor=/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':'red'">
         </label>
       </aside>
+      <br>
       <svg id="chart"></svg>
     </main>
     <div id="tooltip"></div>
