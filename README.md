@@ -1,6 +1,8 @@
 # Mortgage Analysis Project
 Mortgage Analysis Project created for GaTech CSE 6242
 
+#### How do I run this project locally?
+[will need to add the steps here once all pieces are in place]
 
 #### What is the purpose of this analysis project?
 
