@@ -7,3 +7,8 @@
 # 5) populate the tool tip with % success and other relevant data
 ## end outline
 
+## where do we hook into the data?
+# js with flask app -- someone mentioned this approach
+## how to approach data filter algo?
+# 
+###### --> heat map of success rates and top ten static box
