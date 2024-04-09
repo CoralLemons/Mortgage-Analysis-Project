@@ -1,43 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Forecasting Loan Application Success</title>
-    <link href="main.css" rel="stylesheet" />
+    <!-- <link href="main.css" rel="stylesheet" />-->
+    <link rel="stylesheet" href="main.css" />
   </head>
   <body>
     <h1>Forecasting Loan Application Success by County</h1>
-    <h2>Using HMDA data from 2018-2023</h2>
+    <h2>Using HMDA data from 2018-2022</h2>
     <main>
-      <aside>
-        <label>
-          Select State:
-          <select id="state-select">
-            <option value="48">TX</option>
-            <option value="53">WA</option>
-            <option value="36">NY</option>
-          </select>
-        </label>
-        <label>
-          Select Gender:
-          <select id="gender-select">
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-          </select>
-        </label>
-        <label>
-          Select Race/Ethnicity:
-          <select id="race-select">
-            <option>White</option>
-            <option>Black or African American</option>
-            <option>Hispanic</option>
-            <option>American Indian/Alaska Native</option>
-            <option>Asian/Native Hawaiian or Other Pacific Islander</option>
-            <option>Other</option>
-          </select>
-        </label>
-      </aside>
-      <svg id="chart"></svg>
+      <p id="top-paragraph">
+        Select the state for which you would like to apply for a home mortgage
+        loan. Make additional selections and enter your income to get a
+        customized prediction of application success by county. Hover over
+        counties for specific detail.
+      </p>
+      <div id="selections">
+        <aside id="selection-boxes">
+          <label>
+            State:
+            <select id="state-select">
+              <option value="48">TX</option>
+              <option value="53">WA</option>
+              <option value="36">NY</option>
+            </select>
+          </label>
+          <label>
+            Gender:
+            <select id="gender-select">
+              <option value="1">Male</option>
+              <option value="2">Female</option>
+              <option value="3+">Other</option>
+            </select>
+          </label>
+          <label>
+            Age:
+            <select id="age-select">
+              <option>&lt;25</option>
+              <option>25-34</option>
+              <option>35-44</option>
+              <option>45-54</option>
+              <option>55-64</option>
+              <option>65-74</option>
+              <option>&gt;74</option>
+            </select>
+          </label>
+
+          <label>
+            Race/Ethnicity:
+            <select id="race-select">
+              <option>White</option>
+              <option>Black or African American</option>
+              <option>Hispanic</option>
+              <option>American Indian/Alaska Native</option>
+              <option>Asian/Native Hawaiian or Other Pacific Islander</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label>
+            Occupancy Type:
+            <select id="occupancy_type-select">
+              <option>Principal Residence</option>
+              <option>Second Residence</option>
+              <!-- <option>Investment property</option>-->
+            </select>
+          </label>
+          <label
+            >Gross Income in USD:
+            <input
+              id="income-entry"
+              value="100000"
+              type="number"
+              placeholder="0.00"
+              required
+              name="income"
+              min="0"
+              step="0.01"
+              pattern="^\d+(?:\.\d{1,2})?$"
+              onblur="
+            this.parentNode.style.backgroundColor=/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':'#c70000'"
+            />
+          </label>
+        </aside>
+      </div>
+      <button id="results-button">Generate Results</button>
+      <div id="rendered-data">
+        <div>
+          <svg id="chart"></svg>
+          <div id="tooltip"></div>
+        </div>
+        <table id="top-10">
+          <caption id="table-caption">
+            Top 10 Counties by Success
+          </caption>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>County</th>
+              <th>Probability of Success</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </main>
     <div id="tooltip"></div>
     <script type="text/javascript" src="lib/d3.v5.min.js"></script>
@@ -45,5 +112,8 @@
     <script type="text/javascript" src="lib/d3-tip.min.js"></script>
     <script type="text/javascript" src="lib/topojson.v2.min.js"></script>
     <script src="main.js"></script>
+    <footer>
+      <p>&copy; 2024 Team Cool Kids</p>
+    </footer>
   </body>
 </html>
