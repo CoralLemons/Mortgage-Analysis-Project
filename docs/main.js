@@ -35,14 +35,14 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
 
     // console.log(coefs);
     const countyPredictions = coefs.counties.map((x) => {
+      const odds =
+        coefs.intercept + // intercept
+        x.value + // county coef
+        Math.log(coefs.income) * coefs.incomeLog + // income
+        coefs.ageCoef + // age
+        coefs.oTypeCoef;
       return {
-        prediction:
-          (coefs.intercept + // intercept
-            x.value + // county coef
-            Math.log(coefs.income) * coefs.incomeLog + // income
-            coefs.ageCoef + // age
-            coefs.oTypeCoef) / // occupancy type
-          10, // TODO this is fake, just to make the numbers look good for now
+        prediction: odds / (1 + odds), // occupancy type
         ...x,
       };
     });
