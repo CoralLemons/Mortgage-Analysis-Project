@@ -1,12 +1,170 @@
+@import url("https://fonts.googleapis.com/css?family=Lora|Montserrat");
+
+body {
+  font-family: "Montserrat", Garamond, sans-serif;
+  padding: 5px 25px;
+  font-size: 18px;
+  margin: 0;
+}
+
+main {
+  background-color: #3c9181;
+  width: fit-content;
+  border-radius: 25px;
+}
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+}
+
+label {
+  font-size: 20px;
+  padding: 20px;
+}
+
+#top-paragraph {
+  color: #fdfffc;
+  font-family: Cabin;
+  font-size: 24px;
+  text-align: left;
+  background-color: #2ec4b6;
+  border-radius: 25px 25px 0px 0px;
+  padding: 20px 40px 20px 40px;
+  margin: 2px 0px 2px 0px;
+}
+
+#selections {
+  margin: 0 auto;
+  background-color: #011627;
+}
+
+#selection-boxes {
+  padding: 20px;
+  color: #fdfffc;
+}
+
+#state-select {
+  font-size: 18px;
+  width: 100px;
+  padding: 3px;
+  text-align: center;
+}
+
+#gender-select {
+  font-size: 18px;
+  width: 100px;
+  padding: 3px;
+  text-align: center;
+}
+
+#age-select {
+  font-size: 18px;
+  width: 100px;
+  padding: 3px;
+  text-align: center;
+}
+
+#race-select {
+  font-size: 18px;
+  width: 100px;
+  padding: 3px;
+  text-align: center;
+}
+
+#occupancy_type-select {
+  font-size: 18px;
+  width: 200px;
+  padding: 3px;
+  text-align: center;
+}
+
+#income-entry {
+  font-size: 18px;
+  width: 100px;
+  padding: 3px;
+}
+
+#income-entry::-webkit-outer-spin-button,
+#income-entry::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.things {
+  font-size: 18px;
+  width: 120px;
+  padding: 3px;
+}
+
+#results-button {
+  border: none;
+  background-color: #011627;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  width: 260px;
+  display: block;
+  margin: auto;
+  margin-top: 30px;
+  transition-duration: 0.2s;
+}
+
+#results-button:hover {
+  background-color: white;
+  color: black;
+}
+
+#chart {
+  display: block;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.county-borders {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 0.5px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
 .counties :hover {
-   fill: red;
- }
- 
- .county-borders {
-   fill: none;
-   stroke: #fff;
-   stroke-width: 0.5px;
-   stroke-linejoin: round;
-   stroke-linecap: round;
-   pointer-events: none;
- }
+  fill: #c70000;
+}
+
+table,
+th,
+td {
+  background-color: white;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+#rendered-data {
+  display: flex;
+  padding: 40px;
+  gap: 60px;
+  justify-content: space-around;
+}
+
+#top-10 {
+  text-align: center;
+  width: 400px;
+  height: 200px;
+}
+
+#table-caption {
+  color: #fdfffc;
+  font-family: Cabin;
+  font-size: 24px;
+  padding: 20px;
+  margin: 2px 0px 2px 0px;
+}

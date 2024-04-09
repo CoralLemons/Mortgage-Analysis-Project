@@ -4,7 +4,9 @@ const width = 700;
 const svg = d3.select("#chart");
 
 const svgChartEl = document.getElementById("chart");
-const stateSelectEl = document.getElementById("state-select");
+const resultsBtn = document.getElementById("results-button");
+
+const lgrCoefs = d3.csv("lgrcoef.csv");
 
 d3.json("https://d3js.org/us-10m.v2.json").then(function (usData) {
   function drawState(selectedStateId) {
@@ -69,11 +71,16 @@ d3.json("https://d3js.org/us-10m.v2.json").then(function (usData) {
       );
   }
 
-  stateSelectEl.addEventListener("change", (evt) => {
-    drawState(evt.currentTarget.value);
+  function renderData() {
+    const state = document.getElementById("state-select").value;
+    drawState(state);
+  }
+
+  resultsBtn.addEventListener("click", (evt) => {
+    renderData();
   });
 
-  drawState(stateSelectEl.value);
+  renderData();
   /*
   svg
     .append("g")
