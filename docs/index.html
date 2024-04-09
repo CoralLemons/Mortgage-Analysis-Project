@@ -62,15 +62,16 @@
           <label>
             Occupancy Type:
             <select id="occupancy_type-select">
-              <option>Principal residence</option>
-              <option>Second residence</option>
-              <option>Investment property</option>
+              <option>Principal Residence</option>
+              <option>Second Residence</option>
+              <!-- <option>Investment property</option>-->
             </select>
           </label>
           <label
             >Gross Income in USD:
             <input
               id="income-entry"
+              value="100000"
               type="number"
               placeholder="0.00"
               required
@@ -94,61 +95,14 @@
           <caption id="table-caption">
             Top 10 Counties by Success
           </caption>
-          <tr>
-            <th>Rank</th>
-            <th>County</th>
-            <th>Probability of Success</th>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Rockwall</td>
-            <td>0.812</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Somervell</td>
-            <td>0.774</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Aransas</td>
-            <td>0.769</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Morris</td>
-            <td>0.723</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Rains</td>
-            <td>0.723</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>Franklin</td>
-            <td>0.706</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>Marion</td>
-            <td>0.697</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>Harris</td>
-            <td>0.633</td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td>Galveston</td>
-            <td>0.618</td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td>Hood</td>
-            <td>0.598</td>
-          </tr>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>County</th>
+              <th>Probability of Success</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
         </table>
       </div>
     </main>

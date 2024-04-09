@@ -43,6 +43,7 @@ label {
 }
 
 #selection-boxes {
+  display: flex;
   padding: 20px;
   color: #fdfffc;
 }
