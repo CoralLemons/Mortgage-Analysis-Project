@@ -13,7 +13,7 @@ const codeToState = {
 };
 
 d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
-  const lgrCoefs = await d3.csv("lgrcoef.csv");
+  const lgrCoefs = await d3.csv("coef_lgr_agg2.csv");
 
   function drawState(selectedStateId, coefs) {
     svgChartEl.innerHTML = "";
@@ -30,19 +30,22 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
     coefs.counties = countiesData.map((x) => ({
       id: x.id,
       name: x.properties.name,
-      value: getFeatureCoef("county_code_", x.id),
+      value: getFeatureCoef(codeToState[selectedStateId], "county_code_", x.id),
     }));
 
     // console.log(coefs);
     const countyPredictions = coefs.counties.map((x) => {
+      console.log("countyCoef: ", x.value);
       const odds =
         coefs.intercept + // intercept
         x.value + // county coef
+        coefs.genderCoef + // gender
+        coefs.raceCoef +
         Math.log(coefs.income) * coefs.incomeLog + // income
         coefs.ageCoef + // age
-        coefs.oTypeCoef;
+        coefs.oTypeCoef; // occupancy type
       return {
-        prediction: odds / (1 + odds), // occupancy type
+        prediction: odds / (1 + odds),
         ...x,
       };
     });
@@ -99,10 +102,12 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
       );
   }
 
-  function getFeatureCoef(prefix, value) {
+  function getFeatureCoef(state, prefix, value) {
     const key = `${prefix}${value}`;
-    const coef = lgrCoefs.find((x) => x.Feature === key);
-    return parseFloat(coef.Coefficient);
+    const coef = lgrCoefs
+      .filter((x) => x.state === state)
+      .find((x) => x.Feature === key);
+    return coef ? parseFloat(coef.Coefficient) : 0;
   }
 
   function updateTable(countyPredictions) {
@@ -135,32 +140,38 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
     // console.log(lgrCoefs);
 
     const state = document.getElementById("state-select").value;
-    const stateCoef = getFeatureCoef("state_code_", codeToState[state]);
-    console.log(`coef for ${codeToState[state]}:`, stateCoef);
+    const stateAbrev = codeToState[state];
+    console.log(`state: `, stateAbrev);
 
-    // TODO need applicant_sex instead of derived gender
-    // const gender = document.getElementById("gender-select").value;
-    // const genderCoef = getFeatureCoef("applicant_sex", gender);
-    // console.log(`coef for ${gender}:`, genderCoef);
+    const gender = document.getElementById("gender-select").value;
+    const genderCoef = getFeatureCoef(stateAbrev, "derived_sex_", gender);
+    console.log(`coef for ${gender}:`, genderCoef);
 
     const age = document.getElementById("age-select").value;
-    const ageCoef = getFeatureCoef("applicant_age_", age);
+    const ageCoef = getFeatureCoef(stateAbrev, "applicant_age_", age);
     console.log(`coef for ${age}:`, ageCoef);
 
-    // TODO way too many options need to consolidate
-    // const race = document.getElementById("race-select").value;
-    // const raceCoef = getFeatureCoef("race_ethnicity", race);
-    // console.log(`coef for ${race}:`, raceCoef);
+    const race = document.getElementById("race-select").value;
+    const raceCoef = getFeatureCoef(stateAbrev, "race_ethnicity_", race);
+    console.log(`coef for ${race}:`, raceCoef);
 
     const oType = document.getElementById("occupancy_type-select").value;
-    const oTypeCoef = getFeatureCoef("occupancy_type_", oType);
+    const oTypeCoef = getFeatureCoef(stateAbrev, "occupancy_type_", oType);
     console.log(`coef for ${oType}:`, oTypeCoef);
 
     const income = document.getElementById("income-entry").value;
-    const intercept = getFeatureCoef("Intercept", "");
-    const incomeLog = getFeatureCoef("income_log", "");
+    const intercept = getFeatureCoef(stateAbrev, "Intercept", "");
+    const incomeLog = getFeatureCoef(stateAbrev, "income_log", "");
 
-    coefs = { stateCoef, ageCoef, oTypeCoef, income, incomeLog, intercept };
+    coefs = {
+      ageCoef,
+      raceCoef,
+      genderCoef,
+      oTypeCoef,
+      income,
+      incomeLog,
+      intercept,
+    };
 
     drawState(state, coefs);
   }
