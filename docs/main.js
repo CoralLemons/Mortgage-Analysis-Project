@@ -26,19 +26,17 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
       .feature(usData, usData.objects.counties)
       .features.filter((d) => d.id.indexOf(selectedStateId) === 0);
 
-    // console.log(countiesData);
     coefs.counties = countiesData.map((x) => ({
       id: x.id,
       name: x.properties.name,
       value: getFeatureCoef(codeToState[selectedStateId], "county_code_", x.id),
     }));
 
-    // console.log(coefs);
     const countyPredictions = coefs.counties.map((x) => {
       console.log("countyCoef: ", x.value);
       const odds =
         coefs.intercept + // intercept
-        x.value + // county coef
+        x.value + // county
         coefs.genderCoef + // gender
         coefs.raceCoef +
         Math.log(coefs.income) * coefs.incomeLog + // income
@@ -51,8 +49,6 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
     });
     updateTable(countyPredictions);
 
-    // console.log(usData.objects.states);
-
     const projection = d3.geoIdentity().fitSize([width, height], stateData[0]);
 
     const path = d3.geoPath().projection(projection);
@@ -63,31 +59,33 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
       .append("g")
       .attr("class", "counties")
       .selectAll("path")
-      // .data(topojson.feature(us, us.objects.counties).features)
       .data(countiesData)
       .enter()
       .append("path")
       .attr("d", path)
-      // .attr('fill', noDataColor)
       .attr("id", function (d) {
         return "county" + d.id;
       })
-      .on("mouseover", function (d) {
-        console.log(d);
-      })
-      .on("mouseout", function (d) {});
 
-    /*
-    countiesData.forEach(function (d) {
-      d3.select("#county" + parseInt(d[countyId]))
-        .style("fill", mapColor(parseFloat(d[observation])))
-        .on("mouseover", function () {
-          return addTooltip(d[countyName], parseFloat(d[observation]));
-        })
-        .on("mouseout", function (d) {
-          tooltip.transition().duration(200).style("opacity", 0);
-        });
-    });*/
+      .on("mousemove", function handleMouseOver(d) {
+        const [x, y] = d3.mouse(this);
+        const countyData = countyPredictions.find((x) => x.id === d.id);
+        console.log(countyData);
+        const tooltip = document.getElementById("tooltip");
+        tooltip.innerHTML = `<div>
+        <strong>County: </strong>${countyData.name}<br />
+        <strong>${countyData.prediction.toFixed(4)}
+        </div>`;
+        tooltip.style.top = `${y + 400}px`;
+        tooltip.style.left = `${x + 100}px`;
+        tooltip.style.display = "block";
+      })
+
+      .on("mouseout", function (d) {
+        const tooltip = document.getElementById("tooltip");
+        tooltip.style.display = "none";
+        tooltip.innerHTML = "";
+      });
 
     svg
       .append("path")
@@ -137,31 +135,25 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
   }
 
   function renderData() {
-    // console.log(lgrCoefs);
-
     const state = document.getElementById("state-select").value;
     const stateAbrev = codeToState[state];
-    console.log(`state: `, stateAbrev);
 
     const gender = document.getElementById("gender-select").value;
     const genderCoef = getFeatureCoef(stateAbrev, "derived_sex_", gender);
-    console.log(`coef for ${gender}:`, genderCoef);
 
     const age = document.getElementById("age-select").value;
     const ageCoef = getFeatureCoef(stateAbrev, "applicant_age_", age);
-    console.log(`coef for ${age}:`, ageCoef);
 
     const race = document.getElementById("race-select").value;
     const raceCoef = getFeatureCoef(stateAbrev, "race_ethnicity_", race);
-    console.log(`coef for ${race}:`, raceCoef);
 
     const oType = document.getElementById("occupancy_type-select").value;
     const oTypeCoef = getFeatureCoef(stateAbrev, "occupancy_type_", oType);
-    console.log(`coef for ${oType}:`, oTypeCoef);
 
     const income = document.getElementById("income-entry").value;
-    const intercept = getFeatureCoef(stateAbrev, "Intercept", "");
     const incomeLog = getFeatureCoef(stateAbrev, "income_log", "");
+
+    const intercept = getFeatureCoef(stateAbrev, "Intercept", "");
 
     coefs = {
       ageCoef,
@@ -181,26 +173,4 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
   });
 
   renderData();
-  /*
-  svg
-    .append("g")
-    .attr("class", "counties")
-    .selectAll("path")
-    .data(topojson.feature(us, us.objects.counties).features)
-    .enter()
-    .append("path")
-    .attr("d", path);
-
-  svg
-    .append("path")
-    .attr("class", "county-borders")
-    .attr(
-      "d",
-      path(
-        topojson.mesh(us, us.objects.counties, function (a, b) {
-          return a !== b;
-        })
-      )
-    );
-    */
 });

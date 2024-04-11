@@ -138,7 +138,7 @@ label {
 }
 
 .counties :hover {
-  fill: #c70000;
+  fill: #913c4c;
 }
 
 table,
@@ -168,4 +168,14 @@ td {
   font-size: 24px;
   padding: 20px;
   margin: 2px 0px 2px 0px;
+}
+
+#tooltip {
+  display: none;
+  background-color: #913c4c;
+  color: white;
+  position: absolute;
+  z-index: 10;
+  padding: 16px;
+  border-radius: 8px;
 }
