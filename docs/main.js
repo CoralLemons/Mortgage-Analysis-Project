@@ -13,7 +13,7 @@ const codeToState = {
 };
 
 d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
-  const lgrCoefs = await d3.csv("coef_lgr_agg2.csv");
+  const lgrCoefs = await d3.csv("coef_lgr_agg3.csv");
 
   function drawState(selectedStateId, coefs) {
     svgChartEl.innerHTML = "";
@@ -33,21 +33,32 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
     }));
 
     const countyPredictions = coefs.counties.map((x) => {
-      console.log("countyCoef: ", x.value);
-      const odds =
+      const odds = Math.log(
         coefs.intercept + // intercept
-        x.value + // county
-        coefs.genderCoef + // gender
-        coefs.raceCoef +
-        Math.log(coefs.income) * coefs.incomeLog + // income
-        coefs.ageCoef + // age
-        coefs.oTypeCoef; // occupancy type
+          x.value + // county
+          coefs.genderCoef + // gender
+          coefs.raceCoef + // race/ethnicity
+          coefs.ageCoef + // age
+          coefs.oTypeCoef + // occupancy type
+          Math.log(coefs.income / 1000) * coefs.incomeLogCoef + // income
+          Math.log(coefs.loanAmount / 1000) * coefs.loanAmountLogCoef + // loan amount
+          coefs.interestRate * coefs.interestRateCoef + // interest rate
+          coefs.loanTerm * coefs.loanTermCoef + // loan term
+          Math.log(coefs.propertyValue / 1000) * coefs.propertyValueCoef // property value
+      );
       return {
         prediction: odds / (1 + odds),
         ...x,
       };
     });
     updateTable(countyPredictions);
+
+    const colors = ["#F4EBED", "#D3B1B7", "#B27682", "#913C4C"];
+
+    const colorScale = d3
+      .scaleQuantile()
+      .domain(countyPredictions.map((d) => d.prediction))
+      .range(colors);
 
     const projection = d3.geoIdentity().fitSize([width, height], stateData[0]);
 
@@ -66,15 +77,19 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
       .attr("id", function (d) {
         return "county" + d.id;
       })
+      .attr("fill", function (d) {
+        const countyData = countyPredictions.find((x) => x.id === d.id);
+        const color = colorScale(countyData.prediction);
+        return color;
+      })
 
       .on("mousemove", function handleMouseOver(d) {
         const [x, y] = d3.mouse(this);
         const countyData = countyPredictions.find((x) => x.id === d.id);
-        console.log(countyData);
         const tooltip = document.getElementById("tooltip");
         tooltip.innerHTML = `<div>
         <strong>County: </strong>${countyData.name}<br />
-        <strong>${countyData.prediction.toFixed(4)}
+        <strong>${countyData.prediction.toFixed(6)}
         </div>`;
         tooltip.style.top = `${y + 400}px`;
         tooltip.style.left = `${x + 100}px`;
@@ -98,6 +113,28 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
           })
         )
       );
+
+    const legendBody = document.querySelector("#legend > tbody");
+    legendBody.innerHTML = "";
+
+    colors.reverse().forEach((x, idx) => {
+      const row = document.createElement("tr");
+
+      const colorCol = document.createElement("td");
+      colorCol.style.width = "24px";
+      colorCol.style.backgroundColor = x;
+      colorCol.innerHTML = "&nbsp;";
+      row.appendChild(colorCol);
+
+      const probCol = document.createElement("td");
+      probCol.innerHTML = colorScale
+        .invertExtent(x)
+        .map((x) => x.toFixed(6))
+        .join("-");
+      row.appendChild(probCol);
+
+      legendBody.appendChild(row);
+    });
   }
 
   function getFeatureCoef(state, prefix, value) {
@@ -127,7 +164,7 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
       row.appendChild(nameCol);
 
       const probCol = document.createElement("td");
-      probCol.innerHTML = x.prediction.toFixed(4);
+      probCol.innerHTML = x.prediction.toFixed(6);
       row.appendChild(probCol);
 
       tableBody.appendChild(row);
@@ -150,8 +187,24 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
     const oType = document.getElementById("occupancy_type-select").value;
     const oTypeCoef = getFeatureCoef(stateAbrev, "occupancy_type_", oType);
 
-    const income = document.getElementById("income-entry").value;
-    const incomeLog = getFeatureCoef(stateAbrev, "income_log", "");
+    const income = parseFloat(document.getElementById("income-entry").value);
+    const incomeLogCoef = getFeatureCoef(stateAbrev, "income_log", "");
+
+    const loanAmount = 305000; // median loan amount
+    const loanAmountLogCoef = getFeatureCoef(stateAbrev, "loan_amount_log", "");
+
+    const interestRate = 3.875; // median interest rate
+    const interestRateCoef = getFeatureCoef(stateAbrev, "interest_rate", "");
+
+    const loanTerm = 360; // // median loan term in months
+    const loanTermCoef = getFeatureCoef(stateAbrev, "loan_term", "");
+
+    const propertyValue = 375000; // median property value
+    const propertyValueCoef = getFeatureCoef(
+      stateAbrev,
+      "property_value_log",
+      ""
+    );
 
     const intercept = getFeatureCoef(stateAbrev, "Intercept", "");
 
@@ -161,7 +214,15 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
       genderCoef,
       oTypeCoef,
       income,
-      incomeLog,
+      incomeLogCoef,
+      loanAmount,
+      loanAmountLogCoef,
+      interestRate,
+      interestRateCoef,
+      loanTerm,
+      loanTermCoef,
+      propertyValue,
+      propertyValueCoef,
       intercept,
     };
 

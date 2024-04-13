@@ -83,22 +83,22 @@ label {
   text-align: center;
 }
 
-#income-entry {
+#income-entry,
+#amount-entry,
+#rate-entry {
   font-size: 18px;
   width: 100px;
   padding: 3px;
 }
 
 #income-entry::-webkit-outer-spin-button,
-#income-entry::-webkit-inner-spin-button {
+#income-entry::-webkit-inner-spin-button,
+#amount-entry::-webkit-outer-spin-button,
+#amount-entry::-webkit-inner-spin-button,
+#rate-entry::-webkit-outer-spin-button,
+#rate-entry::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-
-.things {
-  font-size: 18px;
-  width: 120px;
-  padding: 3px;
 }
 
 #results-button {
@@ -138,7 +138,7 @@ label {
 }
 
 .counties :hover {
-  fill: #913c4c;
+  fill: #011627;
 }
 
 table,
@@ -154,6 +154,7 @@ td {
   padding: 40px;
   gap: 60px;
   justify-content: space-around;
+  align-items: flex-start;
 }
 
 #top-10 {
@@ -170,9 +171,17 @@ td {
   margin: 2px 0px 2px 0px;
 }
 
+#legend-caption {
+  color: #fdfffc;
+  font-family: Cabin;
+  font-size: 21px;
+  padding: 20px;
+  margin: 2px 0px 2px 0px;
+}
+
 #tooltip {
   display: none;
-  background-color: #913c4c;
+  background-color: #011627;
   color: white;
   position: absolute;
   z-index: 10;

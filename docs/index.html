@@ -13,9 +13,9 @@
     <main>
       <p id="top-paragraph">
         Select the state for which you would like to apply for a home mortgage
-        loan. Make additional selections and enter your income to get a
-        customized prediction of application success by county. Hover over
-        counties for specific detail.
+        loan. Make additional selections and enter income to get a customized
+        prediction of application success by county. Hover over counties for
+        specific detail.
       </p>
       <div id="selections">
         <aside id="selection-boxes">
@@ -32,7 +32,8 @@
             <select id="gender-select">
               <option>Male</option>
               <option>Female</option>
-              <option>Missing</option>
+              <option>Other</option>
+              <option>Prefer not to say</option>
             </select>
           </label>
           <label>
@@ -45,6 +46,7 @@
               <option>55-64</option>
               <option>65-74</option>
               <option>&gt;74</option>
+              <option>Prefer not to say</option>
             </select>
           </label>
 
@@ -72,7 +74,7 @@
             >Gross Income in USD:
             <input
               id="income-entry"
-              value="100000"
+              value="60000"
               type="number"
               placeholder="0.00"
               required
@@ -92,6 +94,12 @@
           <svg id="chart"></svg>
           <div id="tooltip"></div>
         </div>
+        <table id="legend">
+          <caption id="legend-caption">
+            Probability of Success
+          </caption>
+          <tbody></tbody>
+        </table>
         <table id="top-10">
           <caption id="table-caption">
             Top 10 Counties by Success
