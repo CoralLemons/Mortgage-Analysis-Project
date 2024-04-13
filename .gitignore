@@ -46,5 +46,3 @@ po/*~
 rsconnect/
 
 *.parquet
-
-*.csv
