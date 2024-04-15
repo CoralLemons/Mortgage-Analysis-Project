@@ -33,7 +33,7 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
     }));
 
     const countyPredictions = coefs.counties.map((x) => {
-      const odds = Math.log(
+      const odds = Math.exp(
         coefs.intercept + // intercept
           x.value + // county
           coefs.genderCoef + // gender
