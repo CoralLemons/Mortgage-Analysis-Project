@@ -42,8 +42,8 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
           coefs.oTypeCoef + // occupancy type
           Math.log(coefs.income / 1000) * coefs.incomeLogCoef + // income
           Math.log(coefs.loanAmount / 1000) * coefs.loanAmountLogCoef + // loan amount
-          coefs.interestRate * coefs.interestRateCoef + // interest rate
-          coefs.loanTerm * coefs.loanTermCoef + // loan term
+          //coefs.interestRate * coefs.interestRateCoef + // interest rate
+          //coefs.loanTerm * coefs.loanTermCoef + // loan term
           Math.log(coefs.propertyValue / 1000) * coefs.propertyValueCoef // property value
       );
       return {
@@ -217,10 +217,10 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
       incomeLogCoef,
       loanAmount,
       loanAmountLogCoef,
-      interestRate,
-      interestRateCoef,
-      loanTerm,
-      loanTermCoef,
+      //interestRate,
+      //interestRateCoef,
+      //loanTerm,
+      //loanTermCoef,
       propertyValue,
       propertyValueCoef,
       intercept,
