@@ -89,7 +89,7 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
         const tooltip = document.getElementById("tooltip");
         tooltip.innerHTML = `<div>
         <strong>County: </strong>${countyData.name}<br />
-        <strong>${countyData.prediction.toFixed(6)}
+        <strong>${countyData.prediction.toFixed(4)}
         </div>`;
         tooltip.style.top = `${y + 400}px`;
         tooltip.style.left = `${x + 100}px`;
@@ -129,7 +129,7 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
       const probCol = document.createElement("td");
       probCol.innerHTML = colorScale
         .invertExtent(x)
-        .map((x) => x.toFixed(6))
+        .map((x) => x.toFixed(4))
         .join("-");
       row.appendChild(probCol);
 
@@ -164,7 +164,7 @@ d3.json("https://d3js.org/us-10m.v2.json").then(async function (usData) {
       row.appendChild(nameCol);
 
       const probCol = document.createElement("td");
-      probCol.innerHTML = x.prediction.toFixed(6);
+      probCol.innerHTML = x.prediction.toFixed(4);
       row.appendChild(probCol);
 
       tableBody.appendChild(row);
