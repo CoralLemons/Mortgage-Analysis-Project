@@ -25,7 +25,13 @@ To run the server for this JavaScript app, you will need to instantiate a local 
 3. Start the server using `http-server`. By default, this will start the server on `http://localhost:8080`.
 4. Open your web browser and navigate to `http://localhost:8080` to view and interact with the app.
 
-Please note that the port number may vary depending on your configuration. The `http-server` command will display the exact URL you should use.
+Please note that the port number may vary depending on your configuration. The `http-server` command will display the exact URL you should use.├── Code  <- Notebooks to compile data and modeling
+├── docs
+│   ├── coef_lgr_agg3 <- Production coefficients from logistic regression
+│   ├── index.html <- Application
+│   ├── 03_processed <- data after all preprocessing has been done
+│   ├── main.js <- javascript to render tool
+├── Resources <- Other documents used for final stages
 
 ### EXECUTION - How to run a demo on your code
 We've designed the visualization to be straight-forward, but in brief you will select the characteristics you are interested in testing from the list of selectable values, then click "Generate Results"
