@@ -1,16 +1,15 @@
 # Mortgage Analysis Project
 Mortgage Analysis Project created for GaTech CSE 6242
 
-### DESCRIPTION - Describe the package in a few paragraphs
-#### What is the purpose of this analysis project?
+### DESCRIPTION
 
+#### What is the purpose of this analysis project?
 To help mortgage applicants determine their potential to be approved or denied based on several factors such as income, gender, occupancy type, and ethnicity for three popular mortgage application states with the success rate for each state's respective counties. The three states that are included for this project are Texas, Washington, and New York. 
 
 #### What is the model and what value does it bring?
+This project showcases the power of a finely-tuned logistic regression model alongside intuitive, interactive visualizations to examine the most recent mortgage application data extracted from the HMDA. Through prioritizing interpretability and user-centered design, we built a framework and visualization tool tailored to provide mortgage applicants with precise forecasts tailored to their unique circumstances. 
 
-This project showcases the power of a finely tuned logistic regression model alongside intuitive, interactive visualizations to examine the most recent mortgage application data extracted from the HMDA. Through prioritizing interpretability and user-centered design, we built a framework and visualization tool tailored to provide mortgage applicants with precise forecasts tailored to their unique circumstances. 
-
-### INSTALLATION - How to install and setup your code
+### INSTALLATION
 Installation for this project requires that you download the "docs" folder (which you've done) and navigate to docs using your command line.
 
 #### Install Node.js and npm
@@ -46,8 +45,8 @@ Directory Structure
    
    ---
 
-### EXECUTION - How to run a demo on your code
-We've designed the visualization to be straight-forward, but in brief you will select the characteristics you are interested in testing from the list of selectable values, then click "Generate Results"
+### EXECUTION
+We've designed the visualization to be straight-forward, but in brief, you will select the characteristics you are interested in testing from the list of selectable values, then click "Generate Results."
 
 #### Customizable Variables
 1. State (NY, WA, TX)
@@ -55,6 +54,6 @@ We've designed the visualization to be straight-forward, but in brief you will s
 3. Age (<25, 25-34, 35-44, etc...)
 4. Race/Ethnicity (White, Asian, Black, etc...)
 5. Occupancy Type (Principal, Secondary, Investment)
-6. Gross Income in USD (An integer)
+6. Gross Income in USD (A valid numerical entry)
 
-After you click "Generate Results" the cloropleth map will update with a color scale of your likelihood for application success, you'll be provided with a key and then you'll see the top 10 counties where you're most likely to succeed with your application.
+After you click "Generate Results," the choropleth map will update with a color scale of your likelihood for application success, you'll be provided with a choropleth key, and then you'll see the top 10 counties where you're most likely to succeed with your application. You can also hover over individual counties for the likelihood of application success.
