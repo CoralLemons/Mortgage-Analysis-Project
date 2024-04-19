@@ -11,7 +11,13 @@ To help mortgage applicants determine their potential to be approved or denied b
 This project showcases the power of a finely tuned logistic regression model alongside intuitive, interactive visualizations to examine the most recent mortgage application data extracted from the HMDA. Through prioritizing interpretability and user-centered design, we built a framework and visualization tool tailored to provide mortgage applicants with precise forecasts tailored to their unique circumstances. 
 
 ### INSTALLATION - How to install and setup your code
-
+├── Code  <- Notebooks to compile data and modeling
+├── docs
+│   ├── coef_lgr_agg3 <- Production coefficients from logistic regression
+│   ├── index.html <- Application
+│   ├── 03_processed <- data after all preprocessing has been done
+│   ├── main.js <- javascrip to render tool
+├── Resources <- Other documents used for final stages
 
 ### EXECUTION - How to run a demo on your code
 
